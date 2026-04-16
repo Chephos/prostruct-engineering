@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 // ── TYPES ──────────────────────────────────────────────
 interface NavItem { label: string; href: string; }
 interface Service { icon: string; title: string; desc: string; }
@@ -26,7 +28,7 @@ const SERVICES: Service[] = [
 
 const PROJECTS: Project[] = [
   {
-    img: '/images/tractor.jpeg',
+    img: `${BASE_URL}images/tractor.jpeg`,
     type: 'Industrial Construction',
     title: 'Intercontinental Distillers Facility Expansion',
     location: 'Lagos, Nigeria',
@@ -34,42 +36,42 @@ const PROJECTS: Project[] = [
     featured: true,
   },
   {
-    img: '/images/steel isonu.jpeg',
+    img: `${BASE_URL}images/steel isonu.jpeg`,
     type: 'Steel Fabrication',
     title: 'Steel Structural Frame — Warehouse Complex',
     location: 'Ogun State, Nigeria',
     year: '2023',
   },
   {
-    img: '/images/industrial_floor.jpeg',
+    img: `${BASE_URL}images/industrial_floor.jpeg`,
     type: 'Industrial Flooring',
     title: 'High-Performance Industrial Floor Casting',
     location: 'Ogun State, Nigeria',
     year: '2020',
   },
   {
-    img: '/images/storey.jpeg',
+    img: `${BASE_URL}images/storey.jpeg`,
     type: 'Building Construction',
     title: 'Residential Development — A-Storey Block',
     location: 'Ipaja, Lagos',
     year: '2024',
   },
   {
-    img: '/images/steel bokku.jpeg',
+    img: `${BASE_URL}images/steel bokku.jpeg`,
     type: 'Infrastructure Development',
     title: 'Reinforced Concrete Structure — Corporate Campus',
     location: 'Abuja, Nigeria',
     year: '2021',
   },
   {
-    img: '/images/boys.jpeg',
+    img: `${BASE_URL}images/boys.jpeg`,
     type: 'Project Management',
     title: 'Underground Water Storage Tank',
     location: 'Ikeja, Lagos',
     year: '2021',
   },
   {
-    img: '/images/back_industry.jpeg',
+    img: `${BASE_URL}images/back_industry.jpeg`,
     type: 'Industrial Project',
     title: 'Steel Frame Structure',
     location: 'Otta, Ogun State',
@@ -143,7 +145,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
-          <img src="images/logo.jpeg" alt="Prostruct Engineering Logo" className="w-10 h-10 object-contain flex-shrink-0" />
+          <img src={BASE_URL + "images/logo.jpeg"} alt="Prostruct Engineering Logo" className="w-10 h-10 object-contain flex-shrink-0" />
           <div>
             <div className="font-bebas text-white text-xl tracking-widest leading-none">Prostruct</div>
             <div className="text-orange-400 text-[10px] tracking-[0.2em] uppercase font-medium">Engineering Limited</div>
@@ -215,7 +217,7 @@ function Hero() {
       {/* BG Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero-bg.jpg"
+          src={BASE_URL + "images/hero-bg.jpg"}
           alt="Prostruct Engineering construction site"
           className="w-full h-full object-cover animate-zoom-in"
         />
@@ -293,7 +295,7 @@ function About() {
           <div className="reveal-left relative">
             <div className="absolute -top-4 -left-4 right-4 bottom-4 border-2 border-orange-600/30 z-0" />
             <img
-              src="/images/about-team.jpg"
+              src={BASE_URL + "images/about-team.jpg"}
               alt="Prostruct Engineering team on site"
               className="relative z-10 w-full aspect-[4/5] object-cover"
             />
@@ -532,8 +534,8 @@ function Clients() {
               "Prostruct Engineering delivered our facility expansion on time and within budget.
               Their attention to structural quality and professional site management exceeded our expectations."
             </p>
-            <div className="text-orange-400 font-semibold text-sm tracking-wide">— Management Team</div>
-            <div className="text-gray-500 text-xs mt-1 tracking-widest uppercase">Intercontinental Distillers Limited</div>
+            <div className="text-orange-400 font-semibold text-sm tracking-wide">— IDL</div>
+
           </div>
         </div>
       </div>
