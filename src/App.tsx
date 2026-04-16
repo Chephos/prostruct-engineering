@@ -44,15 +44,15 @@ const PROJECTS: Project[] = [
     img: '/images/industrial_floor.jpeg',
     type: 'Industrial Flooring',
     title: 'High-Performance Industrial Floor Casting',
-    location: 'Lagos State, Nigeria',
-    year: '2022',
+    location: 'Ogun State, Nigeria',
+    year: '2020',
   },
   {
     img: '/images/storey.jpeg',
     type: 'Building Construction',
-    title: 'Commercial Development — Multi-Storey Block',
-    location: 'Victoria Island, Lagos',
-    year: '2022',
+    title: 'Residential Development — A-Storey Block',
+    location: 'Ipaja, Lagos',
+    year: '2024',
   },
   {
     img: '/images/steel bokku.jpeg',
@@ -64,9 +64,16 @@ const PROJECTS: Project[] = [
   {
     img: '/images/boys.jpeg',
     type: 'Project Management',
-    title: 'Multi-Phase Industrial Plant Development',
+    title: 'Underground Water Storage Tank',
     location: 'Ikeja, Lagos',
     year: '2021',
+  },
+  {
+    img: '/images/back_industry.jpeg',
+    type: 'Industrial Project',
+    title: 'Steel Frame Structure',
+    location: 'Otta, Ogun State',
+    year: '2024',
   },
 ];
 
@@ -136,9 +143,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-orange-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 group-hover:bg-orange-500 transition-colors">
-            PE
-          </div>
+          <img src="images/logo.jpeg" alt="Prostruct Engineering Logo" className="w-10 h-10 object-contain flex-shrink-0" />
           <div>
             <div className="font-bebas text-white text-xl tracking-widest leading-none">Prostruct</div>
             <div className="text-orange-400 text-[10px] tracking-[0.2em] uppercase font-medium">Engineering Limited</div>
@@ -235,6 +240,7 @@ function Hero() {
             Limited
           </h1>
 
+
           <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl animate-fade-in-up delay-200">
             Building Excellence with Precision and Integrity. We deliver world-class
             structural engineering, steel fabrication, and construction solutions across Nigeria.
@@ -293,7 +299,7 @@ function About() {
             />
             {/* Badge */}
             <div className="absolute -bottom-6 -right-6 z-20 bg-orange-600 text-white p-6 text-center">
-              <div className="font-bebas text-5xl leading-none">15+</div>
+              <div className="font-bebas text-5xl leading-none">5+</div>
               <div className="text-xs tracking-widest uppercase mt-1 font-medium">Years of<br />Excellence</div>
             </div>
           </div>
@@ -654,7 +660,7 @@ function Contact() {
               ))}
             </div>
 
-            
+
           </div>
 
           {/* Form */}
