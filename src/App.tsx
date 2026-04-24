@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -226,7 +227,7 @@ function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex-1 flex items-center max-w-7xl mx-auto px-6 lg:px-10 w-full pt-20">
+      <div className="relative z-10 flex-1 flex items-end max-w-7xl mx-auto px-6 lg:px-10 w-full pt-32 pb-16">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 mb-6 animate-fade-in">
             <div className="h-px w-12 bg-orange-500" />
@@ -235,12 +236,16 @@ function Hero() {
             </span>
           </div>
 
-          <h1 className="font-bebas text-white leading-none mb-6 animate-fade-in-up delay-100"
+          <h1 className="font-bebas text-white leading-none mb-2 animate-fade-in-up delay-100"
             style={{ fontSize: 'clamp(3.5rem, 9vw, 8rem)' }}>
             Prostruct<br />
             <span className="text-orange-500">Engineering</span><br />
             Limited
           </h1>
+          <p className="text-orange-500 font-semibold tracking-widest mb-6 animate-fade-in-up delay-100"
+            style={{ fontSize: 'clamp(0.75rem, 1.5vw, 1rem)' }}>
+            RC 1814266
+          </p>
 
 
           <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl animate-fade-in-up delay-200">
@@ -531,7 +536,7 @@ function Clients() {
           <div className="absolute top-4 left-8 font-bebas text-orange-600/10 text-9xl leading-none select-none">"</div>
           <div className="relative z-10 max-w-3xl mx-auto text-center">
             <p className="font-playfair text-white text-xl md:text-2xl italic leading-relaxed mb-6">
-              "Prostruct Engineering delivered our facility expansion on time and within budget.
+              "Prostruct Engineering delivered on time and within budget.
               Their attention to structural quality and professional site management exceeded our expectations."
             </p>
             <div className="text-orange-400 font-semibold text-sm tracking-wide">— IDL</div>
@@ -613,10 +618,29 @@ function WhyChooseUs() {
 function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', service: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError('');
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current!,
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
+      )
+      .then(() => {
+        setSubmitted(true);
+        setSending(false);
+      })
+      .catch(() => {
+        setError('Something went wrong. Please email us directly at info@prostructengineering.ng');
+        setSending(false);
+      });
   };
 
   return (
@@ -645,8 +669,8 @@ function Contact() {
               {[
                 { icon: '📍', label: 'Location', value: '5 KASUNMU OGUNMAKINDE, AKESAN LAGOS STATE.', value_2: 'APPLE ROAD, IRE AKARI ESTATE, IDI OYA, OYO STATE.' },
                 { icon: '📞', label: 'Phone', value: '+234 (0) 808 282 2560' },
-                { icon: '📧', label: 'Email', value: 'prostructengineeringlimited@gmail.com' },
-                { icon: '🌐', label: 'Website', value: 'www.prostructengineering.com' },
+                { icon: '📧', label: 'Email', value: 'info@prostructengineering.ng' },
+                { icon: '🌐', label: 'Website', value: 'www.prostructengineering.ng' },
                 { icon: '⏰', label: 'Working Hours', value: 'Mon – Fri: 8:00 AM – 5:00 PM' },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4 group">
@@ -683,12 +707,13 @@ function Contact() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-gray-400 text-xs tracking-widest uppercase mb-2">Full Name *</label>
                     <input
                       type="text"
+                      name="from_name"
                       required
                       value={formState.name}
                       onChange={e => setFormState({ ...formState, name: e.target.value })}
@@ -700,6 +725,7 @@ function Contact() {
                     <label className="block text-gray-400 text-xs tracking-widest uppercase mb-2">Email Address *</label>
                     <input
                       type="email"
+                      name="from_email"
                       required
                       value={formState.email}
                       onChange={e => setFormState({ ...formState, email: e.target.value })}
@@ -713,6 +739,7 @@ function Contact() {
                     <label className="block text-gray-400 text-xs tracking-widest uppercase mb-2">Phone Number</label>
                     <input
                       type="tel"
+                      name="phone"
                       value={formState.phone}
                       onChange={e => setFormState({ ...formState, phone: e.target.value })}
                       placeholder="+234 (0) 000 000 0000"
@@ -722,6 +749,7 @@ function Contact() {
                   <div>
                     <label className="block text-gray-400 text-xs tracking-widest uppercase mb-2">Service Required</label>
                     <select
+                      name="service"
                       value={formState.service}
                       onChange={e => setFormState({ ...formState, service: e.target.value })}
                       className="w-full bg-slate-800 border border-white/10 text-gray-400 px-4 py-3.5 text-sm focus:outline-none focus:border-orange-500/60 transition-colors"
@@ -739,6 +767,7 @@ function Contact() {
                 <div>
                   <label className="block text-gray-400 text-xs tracking-widest uppercase mb-2">Project Details *</label>
                   <textarea
+                    name="message"
                     required
                     rows={5}
                     value={formState.message}
@@ -749,10 +778,14 @@ function Contact() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 text-sm tracking-wider transition-colors flex items-center justify-center gap-2"
+                  disabled={sending}
+                  className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 text-sm tracking-wider transition-colors flex items-center justify-center gap-2"
                 >
-                  Send Message →
+                  {sending ? 'Sending…' : 'Send Message →'}
                 </button>
+                {error && (
+                  <p className="text-red-400 text-xs text-center">{error}</p>
+                )}
                 <p className="text-gray-600 text-xs text-center">
                   We respond within 24 hours on business days.
                 </p>
@@ -773,9 +806,7 @@ function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 bg-orange-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                PE
-              </div>
+              <img src={BASE_URL + "images/logo.jpeg"} alt="Prostruct Engineering Logo" className="w-10 h-10 object-contain shrink-0" />
               <div>
                 <div className="font-bebas text-white text-xl tracking-widest leading-none">Prostruct Engineering</div>
                 <div className="text-orange-400 text-[10px] tracking-[0.2em] uppercase font-medium">Limited</div>
